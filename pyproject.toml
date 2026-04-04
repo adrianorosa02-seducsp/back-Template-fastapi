@@ -1,0 +1,27 @@
+[project]
+name = "fast-zero"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Adriano Rosa",email = "adrianorosa02@prof.educacao.sp.gov.br"}
+]
+requires-python = ">=3.12,<4.0"
+dependencies = [
+    "fastapi[standard] (>=0.135.3,<0.136.0)",
+    "pydantic[email] (>=2.12.5,<3.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "taskipy (>=1.14.1,<2.0.0)",
+    "pytest (>=9.0.2,<10.0.0)"
+]
+
+[tool.taskipy.tasks]
+run = "fastapi dev fast_zero/app.py"
+test = "pytest -v"

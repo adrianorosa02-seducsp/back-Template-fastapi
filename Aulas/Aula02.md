@@ -1,10 +1,10 @@
-##📘 Aula-02: CRUD, HTTP e o Contrato de Cadastro
+## 📘 Aula-02: CRUD, HTTP e o Contrato de Cadastro
 
 Na aula passada, vimos como o FastAPI funciona. Hoje, vamos conectar a sua API à necessidade do Front-end: o cadastro e login de usuários.
 
 Nesta aula, focaremos em criar os Schemas (Pydantic) que servirão de ponte entre o formulário que vocês criaram no Front e o banco de dados que usaremos em breve.
 
-#1. O que é CRUD?
+# 1. O que é CRUD?
 
 CRUD é o acrônimo para as quatro operações básicas de qualquer sistema que manipula dados:
 
@@ -21,36 +21,22 @@ Relação com o Protocolo HTTP
 Para cada ação do CRUD, o protocolo HTTP possui um Verbo correspondente:
 
 Ação CRUD
-
 Verbo HTTP
-
 Status Code (Sucesso)
-
 Create
-
 POST
-
 201 Created
-
 Read
-
 GET
-
 200 OK
-
 Update
-
 PUT / PATCH
-
 200 OK
-
 Delete
-
 DELETE
-
 204 No Content
 
-#2. Definindo o Contrato (Schemas)
+## 2. Definindo o Contrato (Schemas)
 
 Os alunos do Front-end já definiram o que precisam enviar. Nosso trabalho é garantir que o Back-end entenda e valide esses dados.
 

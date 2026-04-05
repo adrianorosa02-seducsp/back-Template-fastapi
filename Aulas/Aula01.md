@@ -33,14 +33,14 @@ O servidor sempre responde com um código que indica o resultado da operação:
 
 ### Explicitando o Status no FastAPI:
 Para profissionalizar a API, usamos a biblioteca nativa do Python para definir o status de sucesso:
-
+```python
 from http import HTTPStatus
 
 @app.get("/", status_code=HTTPStatus.OK)
 def read_root():
     return {'message': 'Olá Mundo!'}
 
----
+```
 
 ## 3. APIs vs HTML
 Diferente de sites convencionais que retornam **HTML** (focado em visual/apresentação), nossas APIs focam na **transferência de dados**.
@@ -55,11 +55,12 @@ Para garantir que o JSON enviado ou recebido esteja correto, utilizamos **Schema
 
 ### Passo Prático 01: Criando fast_zero/schemas.py
 Crie este arquivo para definir a estrutura da sua mensagem (o contrato):
-
+```python
 from pydantic import BaseModel
 
 class Message(BaseModel):
     message: str
+```
 
 ### Passo Prático 02: Aplicando no fast_zero/app.py
 Agora, amarramos o contrato à rota para garantir a validação:

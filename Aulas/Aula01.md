@@ -89,3 +89,4 @@ Observe que o seu modelo **Message** agora aparece documentado na seção de **S
 
 ### 🚩 Desafio da Aula
 Altere o valor da chave message no seu app.py para seu nome e verifique se a documentação e a resposta da API refletem a mudança.
+Explique no seu caderno o que aconteceu e porque.

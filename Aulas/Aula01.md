@@ -63,7 +63,7 @@ class Message(BaseModel):
 
 ### Passo Prático 02: Aplicando no fast_zero/app.py
 Agora, amarramos o contrato à rota para garantir a validação:
-
+```python
 from http import HTTPStatus
 from fastapi import FastAPI
 from fast_zero.schemas import Message # Importando o Schema
@@ -74,7 +74,7 @@ app = FastAPI()
 def read_root():
     return {'message': 'Olá Mundo!'}
 
----
+```
 
 ## 📖 5. Onde ver o resultado?
 Após salvar, acesse os subdomínios do seu laboratório:

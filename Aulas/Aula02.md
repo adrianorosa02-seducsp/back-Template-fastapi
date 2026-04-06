@@ -1,19 +1,16 @@
-## 📘 Aula-02: CRUD, HTTP e o Contrato de Cadastro
+# 📘 Aula-02: CRUD, HTTP e o Contrato de Cadastro
 
 Na aula passada, vimos como o FastAPI funciona. Hoje, vamos conectar a sua API à necessidade do Front-end: o cadastro e login de usuários.
 
 Nesta aula, focaremos em criar os Schemas (Pydantic) que servirão de ponte entre o formulário que vocês criaram no Front e o banco de dados que usaremos em breve.
 
-# 1. O que é CRUD?
+## 1. O que é CRUD?
 
 CRUD é o acrônimo para as quatro operações básicas de qualquer sistema que manipula dados:
 
 Create (Criar): Adicionar um novo usuário.
-
 Read (Ler): Buscar os dados de um usuário ou listar todos.
-
 Update (Atualizar): Alterar a senha ou a foto do perfil.
-
 Delete (Excluir): Remover uma conta do sistema.
 
 Relação com o Protocolo HTTP
@@ -43,12 +40,10 @@ Os alunos do Front-end já definiram o que precisam enviar. Nosso trabalho é ga
 No arquivo fast_zero/schemas.py, vamos estruturar três modelos:
 
 UserSchema: O que o usuário envia (inclui a senha).
-
 UserPublic: O que a API devolve (Segurança: NUNCA devolvemos a senha).
-
 UserDB: Como o dado será representado internamente (com ID).
 
-#Prática: fast_zero/schemas.py
+## Prática: fast_zero/schemas.py
 
 ```python
 from pydantic import BaseModel, EmailStr
@@ -71,11 +66,11 @@ class UserDB(UserSchema):
 
 ```
 
-##3. Implementando a Rota de Cadastro (POST)
+## 3. Implementando a Rota de Cadastro (POST)
 
 Agora, vamos criar a rota no fast_zero/app.py. Por enquanto, como não conectamos o Postgres ainda, usaremos uma lista na memória do Python para simular o banco.
 
-#Prática: fast_zero/app.py
+## Prática: fast_zero/app.py
 
 ```python
 from http import HTTPStatus
@@ -101,9 +96,9 @@ def create_user(user: UserSchema):
     return user_with_id
 ```
 
-#4. Por que o Pydantic é importante?
+## 4. Por que o Pydantic é importante?
 
-Se o aluno do Front-end esquecer de enviar o email ou enviar um formato inválido, o Pydantic:
+Se desenvolvedor do Front-end esquecer de enviar o email ou enviar um formato inválido, o Pydantic:
 
 Barra a requisição automaticamente.
 

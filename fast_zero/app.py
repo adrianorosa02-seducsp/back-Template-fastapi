@@ -1,26 +1,42 @@
 from http import HTTPStatus
-from fastapi import FastAPI
-from fast_zero.schemas import UserPublic, UserSchema, UserDB, Message
+from fastapi import FastAPI, Depends, HTTPException
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+from fast_zero.database import get_session, create_db
+from fast_zero.models import User
+from fast_zero.schemas import UserPublic, UserSchema
+from typing import List
 
 app = FastAPI()
 
-# Banco de dados temporário (em memória)
-database = []
-
-
-@app.get('/', status_code=HTTPStatus.OK, response_model=Message)
-def read_root():
-    return {'Adriano': 'Olá Mundo!'}
+# Comando para criar as tabelas ao subir a aplicação
+@app.on_event("startup")
+def on_startup():
+    create_db()
 
 @app.post('/users/', status_code=HTTPStatus.CREATED, response_model=UserPublic)
-def create_user(user: UserSchema):
-    # Simulando a criação de um ID único
-    user_with_id = UserDB(
-        **user.model_dump(), 
-        id=len(database) + 1
+def create_user(user: UserSchema, session: Session = Depends(get_session)):
+    # Verifica se o e-mail já existe no banco real
+    db_user = session.scalar(select(User).where(User.email == user.email))
+    if db_user:
+        raise HTTPException(status_code=400, detail="Email já cadastrado")
+
+    new_user = User(
+        username=user.username,
+        email=user.email,
+        password=user.password
     )
+
+    session.add(new_user)
+    session.commit()
+    session.refresh(new_user)
+
+    return new_user
+
+@app.get('/users/', response_model=List[UserPublic])
+def list_users(session: Session = Depends(get_session)):
+    # 1. Busca todos os usuários na tabela 'User'
+    users = session.scalars(select(User)).all()
     
-    database.append(user_with_id)
-    
-    # O FastAPI filtrará automaticamente a senha, pois usamos UserPublic no response_model
-    return user_with_id
+    # 2. Retorna a lista (o FastAPI + Pydantic cuidam da conversão)
+    return users    

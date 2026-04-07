@@ -38,5 +38,5 @@ def list_users(session: Session = Depends(get_session)):
     # 1. Busca todos os usuários na tabela 'User'
     users = session.scalars(select(User)).all()
     
-    # 2. Retorna a lista (o FastAPI + Pydantic cuidam da conversão)
+    # 2. Retorna a lista (o FastAPI + Pydantic cuidam da conversão verifica Deploy)
     return users    

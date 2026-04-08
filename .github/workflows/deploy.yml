@@ -28,11 +28,19 @@ jobs:
           port: ${{ vars.SSH_PORT }}
           source: "."
           target: "/var/inetpub/wwwroot/lab${{ vars.ALUNO_NUM }}"
-      - name: Reiniciar Docker
+      - name: Reiniciar Docker e Instalar Dependências
         uses: appleboy/ssh-action@master
         with:
           host: ${{ vars.SSH_HOST }}
           username: ${{ vars.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ vars.SSH_PORT }}
-          script: docker service update --force labs_python_lab${{ vars.ALUNO_NUM }}
+          script: |
+            cd /var/inetpub/wwwroot/lab${{ vars.ALUNO_NUM }}
+            # 1. Faz o build da imagem localmente no servidor para incluir as novas libs
+            docker build -t labs_python_lab${{ vars.ALUNO_NUM }}:latest .
+            
+            # 2. Atualiza o serviço usando a imagem que acabamos de buildar
+            docker service update \
+              --image labs_python_lab${{ vars.ALUNO_NUM }}:latest \
+              --force labs_python_lab${{ vars.ALUNO_NUM }}

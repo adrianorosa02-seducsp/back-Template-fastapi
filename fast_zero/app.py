@@ -52,7 +52,7 @@ app = FastAPI()
 def read_root():
     # Coleta as variáveis que vamos injetar via Stack/Docker
     return {
-        "projeto": "Inetz Lab",
+        "Disciplina": "Backend para Desenvolvimento Ágil",
         "aluno_id": os.getenv("ALUNO_NUM", "Não definido"),
         "repositorio": os.getenv("GITHUB_REPO", "Não definido"),
         "ambiente": "Docker Swarm",

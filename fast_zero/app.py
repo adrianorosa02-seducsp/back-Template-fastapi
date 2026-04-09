@@ -40,3 +40,23 @@ def list_users(session: Session = Depends(get_session)):
     
     # 2. Retorna a lista (o FastAPI + Pydantic cuidam da conversão verifica Deploy)
     return users    
+
+import os  # Adicione este import
+from http import HTTPStatus
+from fastapi import FastAPI, Depends, HTTPException
+# ... (seus outros imports)
+
+app = FastAPI()
+
+@app.get('/')
+def read_root():
+    # Coleta as variáveis que vamos injetar via Stack/Docker
+    return {
+        "projeto": "Inetz Lab",
+        "aluno_id": os.getenv("ALUNO_NUM", "Não definido"),
+        "repositorio": os.getenv("GITHUB_REPO", "Não definido"),
+        "ambiente": "Docker Swarm",
+        "status": "Online e Integrado"
+    }
+
+# ... (restante do seu código de usuários)    

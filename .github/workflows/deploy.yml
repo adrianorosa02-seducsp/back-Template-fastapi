@@ -32,4 +32,8 @@ jobs:
 
             # 4. Atualiza o serviço para garantir que o Python recarregue o código novo
             # Nota: Ele usa a imagem base definida na Stack, não buildamos nada aqui.
-            docker service update --force labs_python_lab${{ vars.ALUNO_NUM }}
+            #docker service update --force labs_python_lab${{ vars.ALUNO_NUM }}
+            docker service update \
+            --env-add ALUNO_NUM=${{ vars.ALUNO_NUM }} \
+            --env-add GITHUB_REPO=${{ github.repository }} \
+            --force labs_python_lab${{ vars.ALUNO_NUM }}

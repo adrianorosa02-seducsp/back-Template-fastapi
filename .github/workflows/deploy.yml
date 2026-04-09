@@ -38,9 +38,12 @@ jobs:
           script: |
             cd /var/inetpub/wwwroot/lab${{ vars.ALUNO_NUM }}
             # 1. Faz o build da imagem localmente no servidor para incluir as novas libs
-            docker build -t labs_python_lab${{ vars.ALUNO_NUM }}:latest .
+            git fetch origin main
+            git reset --hard origin/main
+            docker build --no-cache -t labs_python_lab${{ vars.ALUNO_NUM }}:latest .
             
             # 2. Atualiza o serviço usando a imagem que acabamos de buildar
             docker service update \
               --image labs_python_lab${{ vars.ALUNO_NUM }}:latest \
               --force labs_python_lab${{ vars.ALUNO_NUM }}
+          

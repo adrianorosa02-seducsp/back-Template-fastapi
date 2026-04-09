@@ -2,13 +2,13 @@ name: Deploy Inetz Lab
 on:
   push:
     branches: [ main ]
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Código
-        uses: actions/checkout@v4
-      - name: Preparar e Enviar
+      # Não precisamos de Checkout no Runner, pois faremos direto no Servidor
+      - name: Sincronizar Código e Reiniciar Serviço
         uses: appleboy/ssh-action@master
         with:
           host: ${{ vars.SSH_HOST }}
@@ -16,34 +16,20 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ vars.SSH_PORT }}
           script: |
+            # 1. Garante que o diretório existe e tem as permissões corretas
             sudo mkdir -p /var/inetpub/wwwroot/lab${{ vars.ALUNO_NUM }}
             sudo chown -R ${{ vars.SSH_USER }}:${{ vars.SSH_USER }} /var/inetpub/wwwroot/lab${{ vars.ALUNO_NUM }}
-            sudo chmod -R 775 /var/inetpub/wwwroot/lab${{ vars.ALUNO_NUM }}
-      - name: Copiar Arquivos
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ vars.SSH_HOST }}
-          username: ${{ vars.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ vars.SSH_PORT }}
-          source: "."
-          target: "/var/inetpub/wwwroot/lab${{ vars.ALUNO_NUM }}"
-      - name: Reiniciar Docker e Instalar Dependências
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ vars.SSH_HOST }}
-          username: ${{ vars.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ vars.SSH_PORT }}
-          script: |
+            
+            # 2. Entra na pasta ou clona se for a primeira vez
             cd /var/inetpub/wwwroot/lab${{ vars.ALUNO_NUM }}
-            # 1. Faz o build da imagem localmente no servidor para incluir as novas libs
+            if [ ! -d ".git" ]; then
+              git clone https://github.com/${{ github.repository }}.git .
+            fi
+
+            # 3. Sincroniza o código (O volume do Docker reflete isso na hora)
             git fetch origin main
             git reset --hard origin/main
-            docker build --no-cache -t labs_python_lab${{ vars.ALUNO_NUM }}:latest .
-            
-            # 2. Atualiza o serviço usando a imagem que acabamos de buildar
-            docker service update \
-              --image labs_python_lab${{ vars.ALUNO_NUM }}:latest \
-              --force labs_python_lab${{ vars.ALUNO_NUM }}
-          
+
+            # 4. Atualiza o serviço para garantir que o Python recarregue o código novo
+            # Nota: Ele usa a imagem base definida na Stack, não buildamos nada aqui.
+            docker service update --force labs_python_lab${{ vars.ALUNO_NUM }}

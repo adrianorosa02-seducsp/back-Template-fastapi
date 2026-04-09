@@ -3,7 +3,7 @@ name = "fast-zero"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "Adriano Rosa",email = "adrianorosa02@prof.educacao.sp.gov.br"}
+    {name = "Adriano Justino Rosa",email = "adrianorosa02@prof.educacao.sp.gov.br"}
 ]
 requires-python = ">=3.12,<4.0"
 dependencies = [

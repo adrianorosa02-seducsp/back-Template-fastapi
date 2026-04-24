@@ -50,7 +50,7 @@ app = FastAPI()
 
 @app.get('/')
 def read_root():
-    # Coleta as variáveis que vamos injetar via Stack/Docker
+    # Coleta as variáveis que vamos injetar via Stack/Docker estranho isso
     return {
         "Disciplina": "Backend para Desenvolvimento Ágil",
         "aluno_id": os.getenv("ALUNO_NUM", "Não definido"),
@@ -59,4 +59,4 @@ def read_root():
         "status": "Online e Integrado"
     }
 
-# ... (restante do seu código de usuários)    
+# ... (restante do seu código de usuários teste)    

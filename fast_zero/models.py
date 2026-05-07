@@ -8,11 +8,29 @@ table_registry = registry()
 class User:
     __tablename__ = 'users'
 
-    # id e created_at são gerados pelo banco (init=False)
     id: Mapped[int] = mapped_column(init=False, primary_key=True)
     username: Mapped[str] = mapped_column(unique=True)
     password: Mapped[str]
     email: Mapped[str] = mapped_column(unique=True)
+    created_at: Mapped[datetime] = mapped_column(
+        init=False, server_default=func.now()
+    )
+
+@mapped_as_dataclass(table_registry)
+class Aluno:
+    __tablename__ = 'alunos'
+
+    id: Mapped[int] = mapped_column(init=False, primary_key=True)
+    escola: Mapped[str]
+    serie: Mapped[str]
+    n_aluno: Mapped[int]
+    nome_aluno: Mapped[str]
+    ra: Mapped[str]
+    digito: Mapped[str]
+    dt_nascimento: Mapped[str]
+    email_microsoft: Mapped[str]
+    email_google: Mapped[str]
+    situacao_aluno: Mapped[str]
     created_at: Mapped[datetime] = mapped_column(
         init=False, server_default=func.now()
     )

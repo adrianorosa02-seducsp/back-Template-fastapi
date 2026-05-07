@@ -1,0 +1,42 @@
+🚀 Projeto api_devs: Explorando o Ecossistema FastAPI & OpenAPI
+Este repositório contém o template base e o desenvolvimento das aulas de backend utilizando Python e FastAPI. O objetivo principal é capacitar os alunos na criação de APIs modernas, performáticas e, acima de tudo, padronizadas.
+
+🎯 Objetivo do Projeto
+O projeto api_devs foi estruturado para simular um ambiente real de desenvolvimento de software, passando por:
+
+Arquitetura Limpa: Separação entre modelos de banco de dados, validação de dados (schemas) e rotas da aplicação.
+
+Automação e CI/CD: Integração contínua com GitHub Actions e deploy automatizado em infraestrutura Docker Swarm.
+
+Qualidade de Código: Uso de ferramentas de linting (Ruff) e testes automatizados (Pytest).
+
+🏗️ Por que utilizamos OpenAPI (Swagger)?
+A OpenAPI Specification (antigamente conhecida como Swagger) é o padrão ouro para a descrição de APIs RESTful. No nosso projeto, o FastAPI gera essa documentação automaticamente.
+
+Vantagens da Utilização:
+Documentação Viva: A documentação nasce junto com o código. Se você altera uma rota no app.py, a documentação reflete isso instantaneamente.
+
+Interatividade (Sandbox): Permite testar todos os endpoints da API diretamente pelo navegador, sem a necessidade de ferramentas externas como Postman ou Insomnia em um primeiro momento.
+
+Contrato de Interface: Serve como um "contrato" claro entre quem desenvolve o Backend e quem desenvolve o Frontend/Mobile, reduzindo erros de comunicação.
+
+Geração de Código: Permite gerar clientes (SDKs) automaticamente para diversas linguagens a partir da especificação.
+
+🏛️ Validação no Mundo Real: O Caso Seduc/SP
+A adoção de tecnologias modernas e padrões de API não é apenas uma escolha acadêmica, mas uma exigência do mercado e da gestão pública de alto nível.
+
+Como evidência de que nossa iniciativa está alinhada com as melhores práticas do setor público e governamental, a Secretaria da Educação do Estado de São Paulo (Seduc/SP) também utiliza esses padrões para integrar seus sistemas.
+
+Você pode conferir a aplicação prática desses conceitos no catálogo oficial:
+🔗 Catálogo de APIs Seduc/SP - Inscrições
+
+A utilização de APIs padronizadas pela Seduc/SP valida nossa jornada no curso, mostrando que as ferramentas que estamos dominando aqui (como o FastAPI e a especificação OpenAPI) são as mesmas ferramentas utilizadas para sustentar os sistemas educacionais de um dos maiores estados do Brasil.
+
+🛠️ Tecnologias Utilizadas no Lab
+Linguagem: Python 3.12+
+
+Framework: FastAPI
+
+Gerenciador de Pacotes: Poetry
+
+Infraestrutura: Docker & GitHub Actions

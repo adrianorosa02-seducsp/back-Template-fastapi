@@ -1,5 +1,6 @@
 O roteiro de atividade prática visa estruturar um ambiente composto por uma aplicação back-end (Node.js) e um banco de dados (MongoDB). Para atender aos requisitos de orquestração e isolamento descritos no plano de aula, a abordagem mais eficiente é o uso do Docker Compose, que permite definir e executar ambos os serviços de forma integrada e replicável.  Abaixo, apresento os comandos e a estrutura de configuração sugeridos para a atividade:1. Estrutura de ArquivosCrie um diretório para o projeto com a seguinte estrutura:docker-compose.yml: Arquivo de orquestração.Dockerfile (no diretório do back-end): Para definir a imagem da sua aplicação Node.js.2. Configuração do Orquestrador (docker-compose.yml)Este arquivo garante que o banco de dados seja inicializado antes da aplicação e estabelece uma rede interna segura.  
-YAML ```
+YAML 
+```
 version: '3.8'
 services:
   mongodb:

@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: db_mongo
+    networks:
+      - backend-network
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build: .
+    container_name: app_node
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/meubanco
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+

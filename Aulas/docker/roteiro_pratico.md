@@ -9,41 +9,55 @@ Abaixo, apresento os comandos e a estrutura de configuração sugeridos para a a
   Dockerfile (no diretório do back-end): Para definir a imagem da sua aplicação Node.js.
 
   2. Configuração do Orquestrador (docker-compose.yml)
-  Este arquivo garante que o banco de dados seja inicializado antes da aplicação e estabelece uma rede interna segura.  
+  Este arquivo garante que o banco de dados seja inicializado antes da aplicação e estabelece uma rede interna segura. Deve estar no nosso projeto fastapi na raiz fast_zero.  
 
  
 ```
 version: '3.8'
 services:
+  backend:
+    build: .
+    container_name: app_fastapi
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/meubanco
+    depends_on:
+      - mongodb
+
   mongodb:
     image: mongo:latest
     container_name: db_mongo
-    networks:
-      - backend-network
+    ports:
+      - "27017:27017"
     volumes:
       - mongo-data:/data/db
 
-  backend:
-    build: .
-    container_name: app_node
-    ports:
-      - "3000:3000"
-    depends_on:
-      - mongodb
-    environment:
-      - MONGO_URL=mongodb://mongodb:27017/meubanco
-    networks:
-      - backend-network
-
-networks:
-  backend-network:
-    driver: bridge
-
 volumes:
   mongo-data:
-
 ```  
+DockerFile (Já existente deve estar assim)
 
+```
+FROM python:3.13-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+RUN pip install poetry
+COPY pyproject.toml poetry.lock ./
+RUN poetry config virtualenvs.create false && poetry install --no-root
+
+COPY . .
+
+EXPOSE 8000
+
+CMD ["python", "-m", "uvicorn", "fast_zero.app:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers"]
+```
 3. Comandos de Criação e Gestão: Utilize os comandos abaixo para realizar as etapas práticas solicitadas no roteiro:  
 
 **Subir o ambiente:**
